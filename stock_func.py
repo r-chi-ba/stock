@@ -8,7 +8,7 @@ import argparse
 #%matplotlib inline
 # pd.core.common.is_list_like = pd.api.types.is_list_like
 
-
+'''
 def parse_args():
     
     parser = argparse.ArgumentParser(description='Plot or analyze stock price')
@@ -23,6 +23,7 @@ def parse_args():
     parser.add_argument('--md', default=10, help='How many days are averaged', type=int)
     
     return parser.parse_args()
+'''
 
 class Stock:
     
@@ -40,28 +41,28 @@ class Stock:
     #code of the brand
     if code == "":
         code = "^N225"
-            
+    
+    ts = input("Start date: ")
+    #default is a month ago from today.
+    if ts == "":
+        ts = (dt.today()+rdelta(months=-1)).isoformat()
+        
     te = input("End date: ")
     #default is today.
     if te == "":
         te = dt.today().isoformat()
-    
-    ts = input("Start date: ")
-    #default is a month ago.
-    if ts == "":
-        ts = (dt.today()+rdelta(months=-1)).isoformat()
         
-    savefig = input("If save figures or not, T or F. (default=T): ")
-    if savefig == "F":
-        savefig = False
-    else:
+    savefig = input("If save figures or not, T or F. (default=F): ")
+    if savefig == "T":
         savefig = True
-        
-    showfig = input("If show figures or not, T or F. (default=F): ")
-    if showfig == "T":
-        showfig = True
     else:
+        savefig = False
+        
+    showfig = input("If show figures or not, T or F. (default=T): ")
+    if showfig == "F":
         showfig = False
+    else:
+        showfig = True
         
     path = "pictures"
         
@@ -90,18 +91,18 @@ class Stock:
         plt.xlabel('date', fontsize=18)
         plt.ylabel('price', fontsize=18)
 
-        plt.plot(date, price, label='Adj Close', fontsize=18, color='#99b898')
-        plt.plot(date, df[str(md)+'mean'], label=str(md)+'day mean', fontsize=18, color='#e84a5f')
+        plt.plot(date, price, label='Adj Close', color='#99b898')
+        plt.plot(date, df[str(md)+'mean'], label=str(md)+'day mean', color='#e84a5f')
         plt.legend(fontsize=18)
 
         plt.subplot(3,1,2)
-        plt.bar(date, df['Volume'], label='Volume', fontsize=18, color='gray')
+        plt.bar(date, df['Volume'], label='Volume', color='gray')
         plt.legend(fontsize=18)
     
         plt.subplot(3,1,3)
-        plt.plot(date, price, label=['Adj Close'], fontsize=18, color='r')
-        plt.plot(date, df['High'], label='High', fontsize=18, color='b')
-        plt.plot(date, df['Low'], label='Low', fontsize=18, color='b')
+        plt.plot(date, price, label=['Adj Close'], color='r')
+        plt.plot(date, df['High'], label='High', color='b')
+        plt.plot(date, df['Low'], label='Low', color='b')
         plt.legend(fontsize=18)
         plt.plot()
         if self.savefig == True:
@@ -155,8 +156,8 @@ class Stock:
                    
         plt.subplot(2,1,2)
         plt.bar(date, df["width"], 
-                label='difference between the highest price and the lowest one on each day [yen]', color='b')
-        plt.title("difference between the highest price and the lowest one on each day [yen]")
+                label='Daily difference between the highest price and the lowest one [yen]', color='b')
+        plt.title("Daily difference between the highest price and the lowest one [yen]")
         plt.xlabel("date", fontsize=18)
         plt.ylabel("[yen]", fontsize=18)
         plt.legend(fontsize=18)
@@ -166,3 +167,10 @@ class Stock:
         if self.savefig == True:
             plt.savefig(self.path + '/' + self.name + '/' + '-raise_rate' + '.png')
     
+def main():
+    x = Stock()
+    x.graph()
+    x.diff()
+        
+if __name__ == '__main__':
+    main()
