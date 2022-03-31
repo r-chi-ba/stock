@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import date as dt
 from dateutil.relativedelta import relativedelta as rdelta
-import argparse
+#import argparse
 #%matplotlib inline
 # pd.core.common.is_list_like = pd.api.types.is_list_like
 
@@ -92,7 +92,7 @@ class Stock:
         plt.ylabel('price', fontsize=18)
 
         plt.plot(date, price, label='Adj Close', color='#99b898')
-        plt.plot(date, df[str(md)+'mean'], label=str(md)+'day mean', color='#e84a5f')
+        plt.plot(date, df[str(md)+'mean'], label=str(md)+'days mean', color='#e84a5f')
         plt.legend(fontsize=18)
 
         plt.subplot(3,1,2)
