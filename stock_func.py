@@ -27,8 +27,8 @@ def parse_args():
 
 class Stock:
     
-    name = input("name of brand: ")
-    #name of brand, and it is used as path too.
+    name = input("Brand name: ")
+    #Brand name, and it is used as path too.
     if name == "":
         name = "N225"
 
@@ -37,7 +37,7 @@ class Stock:
     if site == "":
         site = "yahoo"
     
-    code = input("code: ")
+    code = input("Code: ")
     #code of the brand
     if code == "":
         code = "^N225"
